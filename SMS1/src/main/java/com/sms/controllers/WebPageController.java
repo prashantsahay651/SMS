@@ -15,8 +15,6 @@ import com.sms.beans.Student;
 import com.sms.beans.StudentRegistration;
 import com.sms.school.SchoolServiceImpl;
 import com.sms.student.StudentServiceImpl;
-import com.sms.subject.SubjectServiceImpl;
-import com.sms.teacher.TeacherServiceImpl;
 
 @Controller
 public class WebPageController {
@@ -31,6 +29,9 @@ public class WebPageController {
 	private School school;
 	
 	private List<Student> students;
+	
+	
+
 	
 	@GetMapping("/")
 	public String index() {
@@ -165,6 +166,15 @@ public class WebPageController {
 		request.setAttribute("classes",school.getClasses());
 		request.setAttribute("students",students);
 		return "/addstudenttosection";
+	}
+	
+	@GetMapping("/adminlogin")
+	public String adminlogin() {
+		return "/adminlogin";
+	}
+	@GetMapping("/adminhome")
+	public String adminhome() {
+		return "/adminhome";
 	}
 	
 }

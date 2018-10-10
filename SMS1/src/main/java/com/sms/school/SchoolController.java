@@ -56,10 +56,10 @@ public class SchoolController {
 		School school = serviceImpl.schoolLogin(emailId, password);
 		if (school == null) {
 			attributes.addFlashAttribute("message", "Invalid Email Id or Password");
-			return new RedirectView("schoollogin");
+			return new RedirectView("adminlogin");
 		} else {
 			session.setAttribute("schoolId", school.getSchoolId());
-			return new RedirectView("schoolhome");
+			return new RedirectView("adminhome");
 		}
 
 	}

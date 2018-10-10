@@ -36,5 +36,18 @@ public class LoginController {
 		return new RedirectView("login");
 
 	}
+	
+	@PostMapping("/WebAdminlLogin")
+	public RedirectView adminLogin(String emailId, String password, ServletRequest request,
+			RedirectAttributes attributes) {
+		System.out.println("in web admin login");
+		if (!(emailId.equals("prashantsahay651@gmail.com") && password.equals("prashant"))) {
+			attributes.addFlashAttribute("message", "Invalid Email Id or Password");
+			return new RedirectView("adminlogin");
+		} else {
+			return new RedirectView("schoolhome");
+		}
+
+	}
 
 }
