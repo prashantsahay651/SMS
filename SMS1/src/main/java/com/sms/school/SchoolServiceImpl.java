@@ -1,11 +1,13 @@
 package com.sms.school;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sms.beans.Login;
+import com.sms.beans.News;
 import com.sms.beans.School;
 import com.sms.login.LoginDAOImpl;
 import com.sms.login.LoginServiceImpl;
@@ -25,12 +27,17 @@ public class SchoolServiceImpl {
 	
 	@Autowired
 	private LoginDAOImpl loginDAOImpl;
+	
+	@Autowired
+	private NewsDAO newsDAO;
 
 	private School school2;
 	
 	private int flag;
 	
 	private String password;
+	
+	private News news;
 	
 	public School saveSchool(School school) {
 		return schoolDAO.save(school);
@@ -83,5 +90,27 @@ public class SchoolServiceImpl {
 		loginDAOImpl.save(school.getLogin());
 		schoolDAO.save(school);
 		return 1;
+	}
+
+	public News addNews(News news, int schoolId) {
+		news.setSchool(schoolDAO.getOne(schoolId));
+		return newsDAO.save(news);
+	}
+
+	public void deleteNews(int newsId) {
+		// TODO Auto-generated method stub
+		 newsDAO.deleteById(newsId);
+	}
+
+	public News getNewsById(int newsId) {
+		
+		return newsDAO.getOne(newsId);
+	}
+
+	public void editNews(News news1) {
+			news=newsDAO.getOne(news1.getNewsId());
+			news.setTitle(news1.getTitle());
+			news.setNewsBody(news1.getNewsBody());
+			newsDAO.save(news);
 	}
 }

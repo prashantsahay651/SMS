@@ -54,6 +54,9 @@ public class School {
 
 	@OneToMany(mappedBy = "school", cascade = CascadeType.ALL, orphanRemoval = true)
 	List<Subject> subjects = new ArrayList<Subject>();
+	
+	@OneToMany(mappedBy = "school", cascade = CascadeType.ALL, orphanRemoval = true)
+	List<News> news=new ArrayList<>();
 
 	public int getSchoolId() {
 		return schoolId;
@@ -191,4 +194,13 @@ public class School {
 		this.classes = classes;
 	}
 
+	public List<News> getNews() {
+		return news;
+	}
+
+	public void setNews(List<News> news) {
+		this.news = news;
+	}
+
+	
 }

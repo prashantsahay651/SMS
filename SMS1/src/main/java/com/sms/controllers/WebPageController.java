@@ -8,8 +8,10 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.sms.beans.News;
 import com.sms.beans.School;
 import com.sms.beans.Student;
 import com.sms.beans.StudentRegistration;
@@ -29,6 +31,8 @@ public class WebPageController {
 	private School school;
 	
 	private List<Student> students;
+	
+	private News news;
 	
 	
 
@@ -177,4 +181,22 @@ public class WebPageController {
 		return "/adminhome";
 	}
 	
+	@GetMapping("/addnews")
+	public String addnews() {
+		return "/addnews";
+	}
+	
+	@GetMapping("/viewnews")
+	public String viewNews(HttpSession session,HttpServletRequest request) {
+		int schoolId=(int) session.getAttribute("schoolId");
+		school=serviceImpl.getSchoolById(schoolId);
+		System.out.println(school.getNews());
+		request.setAttribute("news",school.getNews());
+		return "/viewnews";
+	}
+	
+	@GetMapping("/editnews")
+	public String editNews() {
+		return "/editnews";
+	}
 }

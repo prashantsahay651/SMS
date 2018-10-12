@@ -10,6 +10,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.sms.beans.Login;
+import com.sms.beans.News;
 import com.sms.beans.School;
 
 @Controller
@@ -18,17 +19,20 @@ public class SchoolController {
 	@Autowired
 	private SchoolServiceImpl serviceImpl;
 
-
 	private int flag;
+
+	private int schoolId;
 	
+	private News news;
+
 	@PostMapping("/WebAddSchool")
-	public RedirectView addSchool(School school,RedirectAttributes attributes,Login login) {
-		
+	public RedirectView addSchool(School school, RedirectAttributes attributes, Login login) {
+
 		login.setSchool(school);
 		login.setUser("school");
 		school.setLogin(login);
-		flag=serviceImpl.addSchool(school);
-		if(flag<0) {
+		flag = serviceImpl.addSchool(school);
+		if (flag < 0) {
 			attributes.addFlashAttribute("message", "Email Id Already Exits");
 			return new RedirectView("/addschool");
 		}
@@ -36,18 +40,16 @@ public class SchoolController {
 		return new RedirectView("/addschool");
 	}
 
-	
 	@PostMapping("/WebEditSchool")
-	public RedirectView editSchool(School school,RedirectAttributes attributes,int actionId,HttpSession session) {
-		if(actionId==0) {
-		school=serviceImpl.editSchool(school);
-		session.setAttribute("school",school);
-		attributes.addFlashAttribute("message", "School Edited Sucessfully");
-		return new RedirectView("editschool");
+	public RedirectView editSchool(School school, RedirectAttributes attributes, int actionId, HttpSession session) {
+		if (actionId == 0) {
+			school = serviceImpl.editSchool(school);
+			session.setAttribute("school", school);
+			attributes.addFlashAttribute("message", "School Edited Sucessfully");
+			return new RedirectView("editschool");
 		}
 		return null;
-		
-		
+
 	}
 
 	@PostMapping("/WebSchoolLogin")
@@ -64,4 +66,41 @@ public class SchoolController {
 
 	}
 
+	@PostMapping("/WebAddNews")
+	public RedirectView AddNews(News news, ServletRequest request, HttpSession session, RedirectAttributes attributes) {
+		System.out.println("in news controller");
+		schoolId = (int) session.getAttribute("schoolId");
+		news=serviceImpl.addNews(news,schoolId);
+		if (news == null) {
+			attributes.addFlashAttribute("message", "Something Went Wrong");
+			return new RedirectView("addnews");
+		} else {
+			attributes.addFlashAttribute("message", "News Added Sucessfully");
+			return new RedirectView("addnews");
+		}
+
+	}
+	@PostMapping("/WebDeleteNews")
+	public RedirectView deleteNews(int newsId, ServletRequest request, HttpSession session, RedirectAttributes attributes) {
+		serviceImpl.deleteNews(newsId);
+		
+			attributes.addFlashAttribute("message", "News Deleted Sucessfully");
+			return new RedirectView("viewnews");
+		
+
+	}
+	
+	@PostMapping("/WebEditNews")
+	public RedirectView editNews(News news, ServletRequest request, HttpSession session, RedirectAttributes attributes,int newsId,int actionId) {
+		if(actionId==1) {
+		news=serviceImpl.getNewsById(newsId);
+		session.setAttribute("news",news);
+		return new RedirectView("editnews");
+		}
+			serviceImpl.editNews(news);
+			attributes.addFlashAttribute("message", "News Edited Sucessfully");
+			return new RedirectView("editnews");
+		
+
+	}
 }

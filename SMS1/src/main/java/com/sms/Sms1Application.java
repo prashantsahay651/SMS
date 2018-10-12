@@ -7,11 +7,11 @@ import org.springframework.context.annotation.ComponentScan;
 
 
 @EnableConfigurationProperties
-@ComponentScan(basePackages = "com.sms")
+@ComponentScan(basePackages = "com")
 @SpringBootApplication
 public class Sms1Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Sms1Application.class, args);
+		SpringApplication.run(Sms1Application.class, args); 
 	}
 }
