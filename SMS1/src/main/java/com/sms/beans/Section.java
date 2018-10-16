@@ -42,6 +42,9 @@ public class Section {
 	
 	private int classTeacherId;
 
+	@ElementCollection
+	Map<AttendanceDate, Attendance> attendance = new HashMap<AttendanceDate, Attendance>();
+	
 	public int getSectionId() {
 		return sectionId;
 	}
@@ -90,8 +93,11 @@ public class Section {
 		this.classTeacherId = classTeacherId;
 	}
 
-	
-	
-	
+	public Map<AttendanceDate, Attendance> getAttendance() {
+		return attendance;
+	}
 
+	public void setAttendance(Map<AttendanceDate, Attendance> attendance) {
+		this.attendance = attendance;
+	}
 }
