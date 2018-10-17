@@ -16,7 +16,8 @@ import com.sms.beans.Attendance;
 public class AttendanceController {
 
 	@Autowired
-	private AttendanceServiceImpl serviceImpl;
+	private AttendanceServiceImpl attendanceServiceImpl;
+	
 	private SimpleDateFormat sdf = new SimpleDateFormat("YYYY-mm-dd");
 	
 	@PostMapping("/WebSaveAttendance")
@@ -24,7 +25,7 @@ public class AttendanceController {
 
 		//date today to save attendance
 		String day = sdf.format(new Date());
-		serviceImpl.saveAttendance(day, studentAttendance);
+		attendanceServiceImpl.saveAttendance(day, studentAttendance);
 		return new RedirectView("/saveattendance");
 	}
 }
