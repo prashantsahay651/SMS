@@ -43,7 +43,10 @@ public class Section {
 	private int classTeacherId;
 
 	@ElementCollection
-	Map<AttendanceDate, Attendance> attendance = new HashMap<AttendanceDate, Attendance>();
+	private Map<AttendanceDate, Attendance> attendance = new HashMap<AttendanceDate, Attendance>();
+	
+	@OneToOne(mappedBy = "section", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private TimeTable timeTable;
 	
 	public int getSectionId() {
 		return sectionId;
@@ -99,5 +102,13 @@ public class Section {
 
 	public void setAttendance(Map<AttendanceDate, Attendance> attendance) {
 		this.attendance = attendance;
+	}
+
+	public TimeTable getTimeTable() {
+		return timeTable;
+	}
+
+	public void setTimeTable(TimeTable timeTable) {
+		this.timeTable = timeTable;
 	}
 }

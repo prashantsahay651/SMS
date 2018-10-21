@@ -54,6 +54,9 @@ public class School {
 
 	@OneToMany(mappedBy = "school", cascade = CascadeType.ALL, orphanRemoval = true)
 	List<Subject> subjects = new ArrayList<Subject>();
+	
+	@OneToMany(mappedBy = "school", cascade = CascadeType.ALL, orphanRemoval = true)
+	List<Period> periods = new ArrayList<Period>();
 
 	public int getSchoolId() {
 		return schoolId;
@@ -189,6 +192,14 @@ public class School {
 
 	public void setClasses(List<Class> classes) {
 		this.classes = classes;
+	}
+
+	public List<Period> getPeriods() {
+		return periods;
+	}
+
+	public void setPeriods(List<Period> periods) {
+		this.periods = periods;
 	}
 
 }
