@@ -37,6 +37,8 @@ public class SchoolServiceImpl {
 	
 	private String password;
 	
+	private String username;
+	
 	private News news;
 	
 	public School saveSchool(School school) {
@@ -86,7 +88,9 @@ public class SchoolServiceImpl {
 			return -1;
 		}
 		password=smsServiceImpl.generatePassword();
+		username=smsServiceImpl.generateUsername(school.getSchoolName());
 		school.getLogin().setPassword(password);
+		school.getLogin().setUsername(username);
 		loginDAOImpl.save(school.getLogin());
 		schoolDAO.save(school);
 		return 1;

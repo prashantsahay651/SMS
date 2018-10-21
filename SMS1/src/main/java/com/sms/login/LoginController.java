@@ -20,10 +20,9 @@ public class LoginController {
 	private Login login;
 	
 	@PostMapping("/WebLogin")
-	public RedirectView schoolLogin(String emailId, String password, ServletRequest request, HttpSession session,
+	public RedirectView schoolLogin(String username, String password, ServletRequest request, HttpSession session,
 			RedirectAttributes attributes) {
-		 login = loginSericeImpl.login(emailId, password);
-		 System.out.println(login);
+		 login = loginSericeImpl.login(username, password);
 		if (login == null) {
 			attributes.addFlashAttribute("message", "Invalid Email Id or Password");
 			return new RedirectView("login");

@@ -12,7 +12,7 @@ public class LoginServiceImpl {
 	private LoginDAOImpl loginDAOImpl;
 
 	private Login login;
-	
+
 	private String emailId;
 
 	public int checkEmailId(String emailId) {
@@ -24,13 +24,24 @@ public class LoginServiceImpl {
 		return 0;
 	}
 
-	public Login login(String emailId2, String password) {
-		
-		return loginDAOImpl.login(emailId2,password);
+	public Login login(String username, String password) {
+
+		if (username.contains("@")) {
+			return loginDAOImpl.emailLogin(username, password);
+		} else if (username.matches("[0-9]+") && username.length() == 10) {
+			return loginDAOImpl.mobileNumberLogin(username, password);
+		} else {
+			return loginDAOImpl.usernameLogin(username, password);
+		}
 	}
 
 	public Login saveLogin(Login login2) {
 		// TODO Auto-generated method stub
 		return loginDAOImpl.save(login2);
 	}
+
+	public long getLoginCount() {
+		return loginDAOImpl.count();
+	}
+
 }

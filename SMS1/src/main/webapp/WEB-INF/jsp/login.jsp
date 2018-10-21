@@ -12,7 +12,7 @@
 	<div class="col-md-6 col-md-offset-3 signupinner">
 	<div class="col-md-12">
 		<h3 class="formheading">Login</h3>
-		<input type="email" name="emailId" placeholder="Enter Your Email Id..">
+		<input type="text" name="username" placeholder="Enter Your Email Id or Mobile Number Or Username..">
 		<input type="password" name="password" placeholder="Enter Your Password..">
 	</div>
 		<div class="col-md-8 col-md-offset-2">

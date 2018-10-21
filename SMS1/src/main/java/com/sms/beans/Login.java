@@ -11,7 +11,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Proxy;
 
-
 @Proxy(lazy = false)
 @Entity
 @Table
@@ -20,22 +19,23 @@ public class Login {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int loginId;
+	private String username;
 	private String emailId;
+	private String mobileNumber;
 	private String password;
 	private String user;
 	
 	
+
 	@OneToOne(mappedBy = "login", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private School school;
-	
-	
+
 	@OneToOne(mappedBy = "login", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Student student;
-	
-	
+
 	@OneToOne(mappedBy = "login", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Parent parent;
-	
+
 	@OneToOne(mappedBy = "login", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Teacher teacher;
 
@@ -71,8 +71,6 @@ public class Login {
 		this.school = school;
 	}
 
-	
-	
 	public int getLoginId() {
 		return loginId;
 	}
@@ -81,6 +79,24 @@ public class Login {
 		this.loginId = loginId;
 	}
 
+	public String getUsername() {
+		return username;
+	}
 
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
+
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
+	}
+
+	
+	
+	
 
 }

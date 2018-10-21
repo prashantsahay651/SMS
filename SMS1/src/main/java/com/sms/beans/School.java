@@ -29,7 +29,6 @@ public class School {
 	private String schoolName;
 	@Lob
 	private Blob image;
-	private String mobileNumber;
 	private String alternateMobileNumber;
 	private String addressLine1;
 	private String addressLine2;
@@ -96,14 +95,6 @@ public class School {
 
 	public void setSubjects(List<Subject> subjects) {
 		this.subjects = subjects;
-	}
-
-	public String getMobileNumber() {
-		return mobileNumber;
-	}
-
-	public void setMobileNumber(String mobileNumber) {
-		this.mobileNumber = mobileNumber;
 	}
 
 	public String getAlternateMobileNumber() {
