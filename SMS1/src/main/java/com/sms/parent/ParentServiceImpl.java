@@ -34,9 +34,6 @@ public class ParentServiceImpl {
 		parent2=parentDAO.getOne(parent.getParentId());
 		parent2.setFathersName(parent.getFathersName());
 		parent2.setMothersName(parent.getMothersName());
-		
-		parent2.setMobileNumber(parent.getMobileNumber());
-		parent2.setAlternateMobileNumber(parent.getAlternateMobileNumber());
 		parent2.setAddressLine1(parent.getAddressLine1());
 		parent2.setAddressLine2(parent.getAddressLine2());
 		parent2.setCity(parent.getCity());

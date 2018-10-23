@@ -15,7 +15,9 @@ import com.sms.beans.News;
 import com.sms.beans.School;
 import com.sms.beans.Student;
 import com.sms.beans.StudentRegistration;
+import com.sms.mail.MailClient;
 import com.sms.school.SchoolServiceImpl;
+import com.sms.services.SMSServiceImpl;
 import com.sms.student.StudentServiceImpl;
 
 @Controller
@@ -26,6 +28,12 @@ public class WebPageController {
 	
 	@Autowired
 	private StudentServiceImpl studentServiceImpl;
+	
+	@Autowired
+	private SMSServiceImpl smsServiceImpl;
+	
+	@Autowired
+	private MailClient client;
 	
 
 	private School school;
@@ -199,4 +207,16 @@ public class WebPageController {
 	public String editNews() {
 		return "/editnews";
 	}
+	
+	@GetMapping("/sendmessage")
+	public void sendmessage() {
+		client.prepareAndSend("prashantsahay651@gmail.com","hello");
+	}
+	
+	/*@GetMapping("/mailTemplate")
+	public String mailTemplate() {
+		return "mailTemplate.html";
+	}*/
+	
+	
 }

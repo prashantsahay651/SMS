@@ -57,7 +57,6 @@ public class StudentController {
 			Login login2=new Login();
 			login2.setEmailId(parentEmailId);
 			parent.setLogin(login2);
-			parent.setMobileNumber(parentMobileNumber);
 			flag=studentServiceImpl.addStudent(student,parent,schoolId,question);
 			if(flag==0) {
 				attributes.addFlashAttribute("message","Student Email Id: "+login.getEmailId()+" already Exits");
@@ -198,7 +197,7 @@ public class StudentController {
 		
 		parent=new Parent();
 		parent.setFathersName(studentRegistration.getFathersName());
-		parent.setMobileNumber(studentRegistration.getFatherMobileNumber());
+		
 		parent.getLogin().setEmailId(studentRegistration.getFatherEmailId());
 	
 		

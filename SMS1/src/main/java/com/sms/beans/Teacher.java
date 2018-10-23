@@ -23,8 +23,7 @@ public class Teacher   {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int teacherId;
 	private String teacherName;
-	private String mobileNumber;
-	private String alternateMobileNumber;
+	private String dateOfBirth;
 	private String addressLine1;
 	private String addressLine2;
 	private String city;
@@ -57,21 +56,12 @@ public class Teacher   {
 	public void setTeacherName(String teacherName) {
 		this.teacherName = teacherName;
 	}
-
-	public String getMobileNumber() {
-		return mobileNumber;
+	public String getDateOfBirth() {
+		return dateOfBirth;
 	}
 
-	public void setMobileNumber(String mobileNumber) {
-		this.mobileNumber = mobileNumber;
-	}
-
-	public String getAlternateMobileNumber() {
-		return alternateMobileNumber;
-	}
-
-	public void setAlternateMobileNumber(String alternateMobileNumber) {
-		this.alternateMobileNumber = alternateMobileNumber;
+	public void setDateOfBirth(String dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
 	}
 
 	public String getAddressLine1() {

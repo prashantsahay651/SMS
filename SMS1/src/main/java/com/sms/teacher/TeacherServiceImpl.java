@@ -39,8 +39,9 @@ public class TeacherServiceImpl {
 	private School school;
 	private Teacher teacher2;
 	private List<Teacher> teachers; 
-	Login login;
-	int flag;
+	private Login login;
+	private int flag;
+	private String username;
 
 	public Teacher getTeacherByEmailId(String emailId, int schoolId) {
 
@@ -50,11 +51,23 @@ public class TeacherServiceImpl {
 	public int addTeacher(Teacher teacher, int schoolId) {
 		flag = loginServiceImpl.checkEmailId(teacher.getLogin().getEmailId());
 		if (flag < 0) {
-			return 0;
+			return flag;
 		}
+		flag = loginServiceImpl.checkMobileNumber(teacher.getLogin().getMobileNumber());
+		if (flag < 0) {
+			return flag;
+		}
+		
+		
 		password = smsService.generatePassword();
-		school = schoolServiceImpl.getSchoolById(schoolId);
+		username = smsService.generateUsername(teacher.getTeacherName());
 		teacher.getLogin().setPassword(password);
+		teacher.getLogin().setUsername(username);
+		teacher.getLogin().setUser("teacher");
+		
+		
+		
+		school = schoolServiceImpl.getSchoolById(schoolId);
 		teacher.setSchool(school);
 		login=loginServiceImpl.saveLogin(teacher.getLogin());
 		teacher2=teacherDAO.save(teacher);
@@ -74,11 +87,8 @@ public class TeacherServiceImpl {
 	}
 
 	public Teacher editTeacher(Teacher teacher) {
-		 teacher2=teacherDAO.getOne(teacher.getTeacherId());
+		 	teacher2=teacherDAO.getOne(teacher.getTeacherId());
 		 	teacher2.setTeacherName(teacher.getTeacherName());
-			teacher2.setMobileNumber(teacher.getMobileNumber());
-			
-			teacher2.setAlternateMobileNumber(teacher.getAlternateMobileNumber());
 			teacher2.setAddressLine1(teacher.getAddressLine1());
 			teacher2.setAddressLine2(teacher.getAddressLine2());
 			teacher2.setCity(teacher.getCity());

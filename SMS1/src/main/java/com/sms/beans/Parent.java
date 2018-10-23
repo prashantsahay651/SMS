@@ -24,10 +24,6 @@ public class Parent  {
 	private int parentId;
 	private String fathersName;
 	private String mothersName;
-
-	
-	private String mobileNumber;
-	private String alternateMobileNumber;
 	private String addressLine1;
 	private String addressLine2;
 	private String city;
@@ -65,22 +61,6 @@ public class Parent  {
 
 	public void setMothersName(String mothersName) {
 		this.mothersName = mothersName;
-	}
-
-	public String getMobileNumber() {
-		return mobileNumber;
-	}
-
-	public void setMobileNumber(String mobileNumber) {
-		this.mobileNumber = mobileNumber;
-	}
-
-	public String getAlternateMobileNumber() {
-		return alternateMobileNumber;
-	}
-
-	public void setAlternateMobileNumber(String alternateMobileNumber) {
-		this.alternateMobileNumber = alternateMobileNumber;
 	}
 
 	public String getAddressLine1() {

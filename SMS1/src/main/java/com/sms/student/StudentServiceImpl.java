@@ -41,10 +41,10 @@ public class StudentServiceImpl {
 
 	@Autowired
 	private SectionDAO sectionDAO;
-	
+
 	@Autowired
 	private LoginServiceImpl loginServiceImpl;
-	
+
 	@Autowired
 	private LoginDAOImpl loginDAOImpl;
 
@@ -52,6 +52,7 @@ public class StudentServiceImpl {
 	private Student Student;
 	private Parent parent1;
 	private String password;
+	private String username;
 	private Section section;
 	private int flag;
 
@@ -75,48 +76,67 @@ public class StudentServiceImpl {
 
 	public int addStudent(Student student, Parent parent, int schoolId, Boolean question) {
 		school = schoolServiceImpl.getSchoolById(schoolId);
-		flag = loginServiceImpl.checkEmailId(student.getLogin().getEmailId());
-		if (flag < 0) {
-			return 0;
-		}
-		if (question==null) {
+
+		if (question == null) {
 			flag = loginServiceImpl.checkEmailId(parent.getLogin().getEmailId());
 			if (flag < 0) {
-				return 1;
-			} else {
-				password = smsService.generatePassword();
-				student.getLogin().setPassword(password);
-				password = smsService.generatePassword();
-				parent.getLogin().setPassword(password);
-				parent.getLogin().setUser("parent");
-				loginDAOImpl.save(parent.getLogin());
-				parent = parentServiceImpl.saveParent(parent);
-				student.setParent(parent);
-				student.setSchool(school);
-				student.getLogin().setUser("student");
-				loginDAOImpl.save(student.getLogin());
-				student=studentDAO.save(student);
-				mailService.sendNewRegistrationMail(student.getLogin().getEmailId(), student.getLogin().getPassword());
-				mailService.sendNewRegistrationMail(parent.getLogin().getEmailId(), parent.getLogin().getPassword());
-				return 3;
+				return flag;
 			}
+			flag = loginServiceImpl.checkMobileNumber(parent.getLogin().getMobileNumber());
+			if (flag < 0) {
+				return flag;
+			}
+			password = smsService.generatePassword();
+			username = smsService.generateUsername(student.getStudentName());
+			student.getLogin().setPassword(password);
+			student.getLogin().setUsername(username);
+			student.getLogin().setUser("student");
+
+			password = smsService.generatePassword();
+			username = smsService.generateUsername(parent.getFathersName());
+			parent.getLogin().setPassword(password);
+			parent.getLogin().setUser("parent");
+
+			loginDAOImpl.save(parent.getLogin());
+			parent = parentServiceImpl.saveParent(parent);
+			student.setParent(parent);
+			student.setSchool(school);
+
+			loginDAOImpl.save(student.getLogin());
+			student = studentDAO.save(student);
+
+			mailService.sendNewRegistrationMail(student.getLogin().getEmailId(), student.getLogin().getPassword());
+			mailService.sendNewRegistrationMail(parent.getLogin().getEmailId(), parent.getLogin().getPassword());
+			return 3;
 
 		} else {
 			flag = loginServiceImpl.checkEmailId(parent.getLogin().getEmailId());
-			if (flag < 0) {
-				return 2;
-			} else {
-				password = smsService.generatePassword();
-				student.getLogin().setPassword(password);
-				student.setParent(parent1);
-				student.setParent(parent1);
-				student.setSchool(school);
-				student.getLogin().setUser("student");
-				loginDAOImpl.save(student.getLogin());
-				student=studentDAO.save(student);
-				mailService.sendNewRegistrationMail(student.getLogin().getEmailId(), student.getLogin().getPassword());
-				return 3;
+			if (flag == 0) {
+				return -3;
 			}
+			flag = loginServiceImpl.checkMobileNumber(parent.getLogin().getMobileNumber());
+			if (flag == 0) {
+				return -4;
+			}
+
+			password = smsService.generatePassword();
+			username = smsService.generateUsername(student.getStudentName());
+			student.getLogin().setPassword(password);
+			student.getLogin().setUsername(username);
+			student.getLogin().setUser("student");
+
+			parent1 = parentServiceImpl.getParentByEmailId(parent.getLogin().getEmailId());
+
+			student.setParent(parent1);
+			student.setSchool(school);
+			
+
+			loginDAOImpl.save(student.getLogin());
+			student = studentDAO.save(student);
+			
+			
+			mailService.sendNewRegistrationMail(student.getLogin().getEmailId(), student.getLogin().getPassword());
+			return 3;
 
 		}
 	}
@@ -124,9 +144,7 @@ public class StudentServiceImpl {
 	public Student editStudent(Student student) {
 		Student student1 = studentDAO.getOne(student.getStudentId());
 		student1.setStudentName(student.getStudentName());
-		//student1.setMobileNumber(student.getMobileNumber());
-		
-		//student1.setAlternateMobileNumber(student.getAlternateMobileNumber());
+		student1.setDateOfBirth(student.getDateOfBirth());
 		student1.setAddressLine1(student.getAddressLine1());
 		student1.setAddressLine2(student.getAddressLine2());
 		student1.setCity(student.getCity());
@@ -169,39 +187,32 @@ public class StudentServiceImpl {
 	}
 
 	public void acceptStudent(Student student, Parent parent, int schoolId, boolean question, int sectionId) {
-		/*school = schoolServiceImpl.getSchoolById(schoolId);
-		section = sectionDAO.getOne(sectionId);
-		student.setSection(section);
-		if (!question) {
-			password = smsService.generatePassword();
-			student.setPassword(password);
-			password = smsService.generatePassword();
-			parent.setPassword(password);
-			parent = parentServiceImpl.saveParent(parent);
-			student.setParent(parent);
-			student.setSchool(school);
-			studentDAO.save(student);
-			mailService.sendNewRegistrationMail(student.getEmailId(), student.getPassword());
-			mailService.sendNewRegistrationMail(parent.getEmailId(), parent.getPassword());
-		} else {
-			password = smsService.generatePassword();
-			student.setPassword(password);
-			student.setParent(parent1);
-			student.setParent(parent1);
-			student.setSchool(school);
-			studentDAO.save(student);
-			mailService.sendNewRegistrationMail(student.getEmailId(), student.getPassword());
-		}
-*/
+		/*
+		 * school = schoolServiceImpl.getSchoolById(schoolId); section =
+		 * sectionDAO.getOne(sectionId); student.setSection(section); if (!question) {
+		 * password = smsService.generatePassword(); student.setPassword(password);
+		 * password = smsService.generatePassword(); parent.setPassword(password);
+		 * parent = parentServiceImpl.saveParent(parent); student.setParent(parent);
+		 * student.setSchool(school); studentDAO.save(student);
+		 * mailService.sendNewRegistrationMail(student.getEmailId(),
+		 * student.getPassword());
+		 * mailService.sendNewRegistrationMail(parent.getEmailId(),
+		 * parent.getPassword()); } else { password = smsService.generatePassword();
+		 * student.setPassword(password); student.setParent(parent1);
+		 * student.setParent(parent1); student.setSchool(school);
+		 * studentDAO.save(student);
+		 * mailService.sendNewRegistrationMail(student.getEmailId(),
+		 * student.getPassword()); }
+		 */
 	}
 
 	public void deleteRegsiterStudent(int id) {
 		registerStudentDAO.deleteById(id);
-		
+
 	}
 
 	public List<com.sms.beans.Student> getStudentWithNoAllotatedSection(int schoolId) {
-		
+
 		return studentDAO.getStudentWithNoAllotatedSection(schoolId);
 	}
 }
