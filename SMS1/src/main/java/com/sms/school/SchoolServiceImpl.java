@@ -85,8 +85,11 @@ public class SchoolServiceImpl {
 	public int addSchool(School school) {
 		flag=loginServiceImpl.checkEmailId(school.getLogin().getEmailId());
 		if(flag<0) {
-			return -1;
+			return flag;
 		}
+		flag=loginServiceImpl.checkMobileNumber(school.getLogin().getMobileNumber());
+		if(flag<0)
+			return flag;
 		password=smsServiceImpl.generatePassword();
 		username=smsServiceImpl.generateUsername(school.getSchoolName());
 		school.getLogin().setPassword(password);

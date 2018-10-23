@@ -21,5 +21,9 @@ public interface LoginDAOImpl extends JpaRepository<Login,Integer>{
 	@Query(value = "SELECT * from login where username=?1 and password=?2", nativeQuery = true)
 	Login usernameLogin(String username, String password);
 
+
+	@Query(value = "SELECT mobile_number from login where mobile_number=?1", nativeQuery = true)
+	String checkMobileNumber(String mobileNumber);
+
 	
 }

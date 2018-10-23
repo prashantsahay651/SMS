@@ -15,6 +15,8 @@ public class LoginServiceImpl {
 
 	private String emailId;
 
+	private String mobileNumber;
+
 	public int checkEmailId(String emailId) {
 
 		emailId = loginDAOImpl.checkEmailId(emailId);
@@ -42,6 +44,14 @@ public class LoginServiceImpl {
 
 	public long getLoginCount() {
 		return loginDAOImpl.count();
+	}
+
+	public int checkMobileNumber(String mobileNumber) {
+		mobileNumber = loginDAOImpl.checkMobileNumber(mobileNumber);
+		if (mobileNumber != null)
+
+			return -2;
+		return 0;
 	}
 
 }

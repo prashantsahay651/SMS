@@ -194,7 +194,7 @@ public class StudentController {
 		student=new Student();
 		student.setStudentName(studentRegistration.getStudentName());
 		student.getLogin().setEmailId(studentRegistration.getStudentEmailId());
-		student.setMobileNumber(studentRegistration.getStudentMobileNumber());
+		//student.setMobileNumber(studentRegistration.getStudentMobileNumber());
 		
 		parent=new Parent();
 		parent.setFathersName(studentRegistration.getFathersName());

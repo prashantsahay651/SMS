@@ -124,9 +124,9 @@ public class StudentServiceImpl {
 	public Student editStudent(Student student) {
 		Student student1 = studentDAO.getOne(student.getStudentId());
 		student1.setStudentName(student.getStudentName());
-		student1.setMobileNumber(student.getMobileNumber());
+		//student1.setMobileNumber(student.getMobileNumber());
 		
-		student1.setAlternateMobileNumber(student.getAlternateMobileNumber());
+		//student1.setAlternateMobileNumber(student.getAlternateMobileNumber());
 		student1.setAddressLine1(student.getAddressLine1());
 		student1.setAddressLine2(student.getAddressLine2());
 		student1.setCity(student.getCity());

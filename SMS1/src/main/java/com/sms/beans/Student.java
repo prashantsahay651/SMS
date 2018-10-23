@@ -1,6 +1,5 @@
 package com.sms.beans;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,26 +11,22 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.Proxy;
 
-@Proxy(lazy=false)
+@Proxy(lazy = false)
 @Entity
-public class Student{
+public class Student {
 
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int studentId;
 	private String studentName;
-
-	private String mobileNumber;
-	private String alternateMobileNumber;
+	private String dateOfBirth;
 	private String addressLine1;
 	private String addressLine2;
 	private String city;
 	private String district;
 	private String state;
 	private int pinCode;
-	
-	
+
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "login_id", nullable = false)
 	private Login login;
@@ -39,11 +34,11 @@ public class Student{
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "parent_id")
 	private Parent parent;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "school_id")
 	private School school;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "section_id")
 	private Section section;
@@ -72,30 +67,12 @@ public class Student{
 		this.parent = parent;
 	}
 
-
-
 	public Login getLogin() {
 		return login;
 	}
 
 	public void setLogin(Login login) {
 		this.login = login;
-	}
-
-	public String getMobileNumber() {
-		return mobileNumber;
-	}
-
-	public void setMobileNumber(String mobileNumber) {
-		this.mobileNumber = mobileNumber;
-	}
-
-	public String getAlternateMobileNumber() {
-		return alternateMobileNumber;
-	}
-
-	public void setAlternateMobileNumber(String alternateMobileNumber) {
-		this.alternateMobileNumber = alternateMobileNumber;
 	}
 
 	public String getAddressLine1() {
@@ -153,8 +130,6 @@ public class Student{
 	public void setSchool(School school) {
 		this.school = school;
 	}
-	
-	
 
 	public Section getSection() {
 		return section;
@@ -164,7 +139,12 @@ public class Student{
 		this.section = section;
 	}
 
-	
-	
+	public String getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(String dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
 
 }
