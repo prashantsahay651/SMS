@@ -2,20 +2,20 @@ package com.sms.controllers;
 
 import java.util.List;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sms.beans.News;
 import com.sms.beans.School;
 import com.sms.beans.Student;
 import com.sms.beans.StudentRegistration;
-import com.sms.mail.MailClient;
+import com.sms.mail.MailService;
 import com.sms.school.SchoolServiceImpl;
 import com.sms.services.SMSServiceImpl;
 import com.sms.student.StudentServiceImpl;
@@ -32,8 +32,8 @@ public class WebPageController {
 	@Autowired
 	private SMSServiceImpl smsServiceImpl;
 	
-	@Autowired
-	private MailClient client;
+	@Autowired 
+	MailService mailService;
 	
 
 	private School school;
@@ -210,13 +210,34 @@ public class WebPageController {
 	
 	@GetMapping("/sendmessage")
 	public void sendmessage() {
-		client.prepareAndSend("prashantsahay651@gmail.com","hello");
+		mailService.sendNewRegistrationMail("pksahay651@gmail.com","65656565");
 	}
 	
 	/*@GetMapping("/mailTemplate")
 	public String mailTemplate() {
 		return "mailTemplate.html";
 	}*/
+	
+	@GetMapping("/addquestionpaper")
+	public String addquestionpaper() {
+		return "/addquestionpaper";
+	}
+	
+	@GetMapping("/addeventcalender")
+	public String addeventcalender() {
+		return "/addeventcalender";
+	}
+	
+	@GetMapping("/vieweventcalender")
+	public String vieweventcalender(HttpSession session,ServletRequest request) {
+		int schoolId=(int) session.getAttribute("schoolId");
+		school=serviceImpl.getSchoolById(schoolId);
+		System.out.println(school.getEventCalenders());
+		request.setAttribute("eventCalenders",school.getEventCalenders());
+		return "/vieweventcalender";
+	}
+	
+	
 	
 	
 }

@@ -96,6 +96,7 @@ public class StudentServiceImpl {
 			username = smsService.generateUsername(parent.getFathersName());
 			parent.getLogin().setPassword(password);
 			parent.getLogin().setUser("parent");
+			
 
 			loginDAOImpl.save(parent.getLogin());
 			parent = parentServiceImpl.saveParent(parent);

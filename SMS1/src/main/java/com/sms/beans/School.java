@@ -2,6 +2,7 @@ package com.sms.beans;
 
 import java.sql.Blob;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -56,6 +57,10 @@ public class School {
 	
 	@OneToMany(mappedBy = "school", cascade = CascadeType.ALL, orphanRemoval = true)
 	List<News> news=new ArrayList<>();
+	
+	@OneToMany(mappedBy = "school", cascade = CascadeType.ALL, orphanRemoval = true)
+	List<EventCalender> eventCalenders = new ArrayList<>();
+	
 
 	public int getSchoolId() {
 		return schoolId;
@@ -191,6 +196,14 @@ public class School {
 
 	public void setNews(List<News> news) {
 		this.news = news;
+	}
+
+	public List<EventCalender> getEventCalenders() {
+		return eventCalenders;
+	}
+
+	public void setEventCalenders(List<EventCalender> eventCalenders) {
+		this.eventCalenders = eventCalenders;
 	}
 
 	

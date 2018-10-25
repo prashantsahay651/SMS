@@ -24,6 +24,8 @@ public class Class {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)  
 	private int classId;
+	
+	
 	private String className;
 	
 	@OneToMany(mappedBy = "class1", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -32,6 +34,9 @@ public class Class {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "school_id")
 	private School school;
+	
+	@OneToMany(mappedBy = "class1", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<QuestionPaper> questionPapers;
 
 	public int getClassId() {
 		return classId;
