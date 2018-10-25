@@ -17,8 +17,8 @@
 		<input type="email" name="emailId" placeholder="Enter Student Email Id...">
 		<label>Parent Already Registered? </label> <input type="checkbox" id="trigger" name="question">
 		<div id="hidden_fields">
-		<input type="email" name="fathersName" placeholder="Enter Father's Name...">
-		<input type="email" name="parentPhoneNumber" placeholder="Enter Parent Mobile Number...">
+		<input type="text" name="fathersName" placeholder="Enter Father's Name...">
+		<input type="text" name="parentPhoneNumber" placeholder="Enter Parent Mobile Number...">
 		</div>
 		<input type="email" name="parentEmailId" placeholder="Enter Parent Email ID...">
 		

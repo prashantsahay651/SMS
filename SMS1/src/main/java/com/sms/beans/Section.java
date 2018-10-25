@@ -42,6 +42,15 @@ public class Section {
 	
 	private int classTeacherId;
 
+	@ElementCollection
+	private Map<AttendanceDate, Attendance> attendance = new HashMap<AttendanceDate, Attendance>();
+	
+	@OneToOne(mappedBy = "section", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private TimeTable timeTable;
+	
+	@OneToMany(mappedBy = "section", cascade = CascadeType.ALL, orphanRemoval = true)
+	List<HomeWork> homeWork=new ArrayList<HomeWork>();
+	
 	public int getSectionId() {
 		return sectionId;
 	}
@@ -90,8 +99,27 @@ public class Section {
 		this.classTeacherId = classTeacherId;
 	}
 
-	
-	
-	
+	public Map<AttendanceDate, Attendance> getAttendance() {
+		return attendance;
+	}
 
+	public void setAttendance(Map<AttendanceDate, Attendance> attendance) {
+		this.attendance = attendance;
+	}
+
+	public TimeTable getTimeTable() {
+		return timeTable;
+	}
+
+	public void setTimeTable(TimeTable timeTable) {
+		this.timeTable = timeTable;
+	}
+
+	public List<HomeWork> getHomeWork() {
+		return homeWork;
+	}
+
+	public void setHomeWork(List<HomeWork> homeWork) {
+		this.homeWork = homeWork;
+	}
 }

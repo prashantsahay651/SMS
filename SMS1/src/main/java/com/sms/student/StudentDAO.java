@@ -18,4 +18,6 @@ public interface StudentDAO extends JpaRepository<Student,Integer> {
 	@Query(value="select * from student where section_id IS NULL and school_id=?1",nativeQuery = true)
 	List<Student> getStudentWithNoAllotatedSection(int schoolId);
 
+	@Query(value = "SELECT * from student where student_id=?1", nativeQuery = true)
+	Student getStudentById(int studentId);
 }
