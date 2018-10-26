@@ -1,5 +1,7 @@
 package com.sms.beans;
 
+import java.io.UnsupportedEncodingException;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -7,37 +9,43 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import org.apache.commons.codec.binary.Base64;
 import org.hibernate.annotations.Proxy;
 
-@Proxy(lazy=false)
+@Proxy(lazy = false)
 @Entity
 @Table
 public class QuestionPaper {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
-	@OneToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "subject_id", nullable = false)
-	private Subject subject;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "school_id")
+	@JoinColumn(name = "subject_id")
+	private Subject subject;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "class_id")
 	private Class class1;
-	
-	private String Discription;
-	
+
+	private String discription;
+
 	private String fileName;
 
-    private String fileType;
-    
-    @Lob
-    private byte[] data;
+	private String fileType;
+
+	@Transient
+	private String base64Encoded;
+
+	@Lob
+	private byte[] data;
 
 	public int getId() {
 		return id;
@@ -64,11 +72,11 @@ public class QuestionPaper {
 	}
 
 	public String getDiscription() {
-		return Discription;
+		return discription;
 	}
 
 	public void setDiscription(String discription) {
-		Discription = discription;
+		this.discription = discription;
 	}
 
 	public String getFileName() {
@@ -94,15 +102,23 @@ public class QuestionPaper {
 	public void setData(byte[] data) {
 		this.data = data;
 	}
-    
-    
-    
-	
-	
 
-	
-	
-	
-	
+	public String getBase64Encoded() {
+		if (getData() != null) {
+			try {
+				byte[] encodeBase64 = Base64.encodeBase64(getData());
+				return new String(encodeBase64, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return base64Encoded;
+
+	}
+
+	public void setBase64Encoded(String base64Encoded) {
+		this.base64Encoded = base64Encoded;
+	}
 
 }

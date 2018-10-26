@@ -1,5 +1,7 @@
 package com.sms.beans;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,7 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.Proxy;
@@ -27,8 +31,8 @@ public class Subject {
 	@JoinColumn(name = "school_id")
 	private School school;
 	
-	@OneToOne(mappedBy = "subject", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private QuestionPaper questionPaper;
+	@OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<QuestionPaper> questionPapers;
 
 	public int getSubjectId() {
 		return subjectId;
@@ -52,6 +56,14 @@ public class Subject {
 
 	public void setSchool(School school) {
 		this.school = school;
+	}
+
+	public List<QuestionPaper> getQuestionPapers() {
+		return questionPapers;
+	}
+
+	public void setQuestionPapers(List<QuestionPaper> questionPapers) {
+		this.questionPapers = questionPapers;
 	}
 	
 	

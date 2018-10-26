@@ -219,7 +219,12 @@ public class WebPageController {
 	}*/
 	
 	@GetMapping("/addquestionpaper")
-	public String addquestionpaper() {
+	public String addquestionpaper(HttpSession session,ServletRequest request) {
+		int schoolId=(int) session.getAttribute("schoolId");
+		school=serviceImpl.getSchoolById(schoolId);
+		students=studentServiceImpl.getStudentWithNoAllotatedSection(schoolId);
+		request.setAttribute("classes",school.getClasses());
+		request.setAttribute("subjects",school.getSubjects());
 		return "/addquestionpaper";
 	}
 	
@@ -235,6 +240,14 @@ public class WebPageController {
 		System.out.println(school.getEventCalenders());
 		request.setAttribute("eventCalenders",school.getEventCalenders());
 		return "/vieweventcalender";
+	}
+	
+	@GetMapping("/viewquestionpaper")
+	public String viewquestionpaper(HttpSession session,ServletRequest request) {
+		int schoolId=(int) session.getAttribute("schoolId");
+		school=serviceImpl.getSchoolById(schoolId);
+		request.setAttribute("classes",school.getClasses());
+		return "/viewquestionpaper";
 	}
 	
 	

@@ -69,6 +69,14 @@ public class Class {
 	public void setSchool(School school) {
 		this.school = school;
 	}
+
+	public List<QuestionPaper> getQuestionPapers() {
+		return questionPapers;
+	}
+
+	public void setQuestionPapers(List<QuestionPaper> questionPapers) {
+		this.questionPapers = questionPapers;
+	}
 	
 	
 
