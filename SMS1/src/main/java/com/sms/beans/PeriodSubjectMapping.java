@@ -33,7 +33,6 @@ public class PeriodSubjectMapping {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "subject_id")
 	private Subject subject;
-
 	
 	public String getDayOfWeek() {
 		return dayOfWeek;
