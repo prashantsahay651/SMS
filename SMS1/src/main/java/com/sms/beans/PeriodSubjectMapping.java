@@ -19,9 +19,12 @@ public class PeriodSubjectMapping {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int periodSubjectMappingId;
 	
+	/* Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday */
+	private String dayOfWeek;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "time_table_id")
-	TimeTable timeTable;
+	private TimeTable timeTable;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "period_id")
@@ -30,8 +33,15 @@ public class PeriodSubjectMapping {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "subject_id")
 	private Subject subject;
-
 	
+	public String getDayOfWeek() {
+		return dayOfWeek;
+	}
+
+	public void setDayOfWeek(String dayOfWeek) {
+		this.dayOfWeek = dayOfWeek;
+	}
+
 	public TimeTable getTimeTable() {
 		return timeTable;
 	}
